@@ -37,8 +37,8 @@ export default function TopBAr({user, userBalance, openSheet, gettingActions}) {
       </div>
 
       <div className="d-flex">
-        <li className="list-unstyled"><Link><i class="fa-regular fa-bell"></i></Link></li>
-        <li className="list-unstyled"><Link><i class="fa-regular fa-user"></i></Link></li>
+        <li className="list-unstyled"><Link><i class="text-white fa-regular fa-bell"></i></Link></li>
+        <li className="list-unstyled"><Link><i class="text-white fa-regular fa-user"></i></Link></li>
       </div>
 
       <div class="offcanvas offcanvas-start" id="menu">
