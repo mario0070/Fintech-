@@ -226,7 +226,7 @@
     white-space: nowrap;
 }
 
-.homepage .tx i {
+/* .homepage .tx i {
     background-color: var(--primary)b5;
     padding: 1em;
     margin-right: .5em;
@@ -234,7 +234,7 @@
     border-radius: 8px;
     color: floralwhite;
     text-align: center;
-}
+} */
 
 .homepage .tx_name {
     font-weight: 900;

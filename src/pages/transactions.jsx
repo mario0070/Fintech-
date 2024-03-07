@@ -6,6 +6,7 @@ import loading from "/public/img/loading.png"
 import { useCookies } from 'react-cookie'
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import numeral from 'numeral';
 
 export default function Transactions() {
   const [isloadin,setLoading] = useState(true)
@@ -27,15 +28,14 @@ export default function Transactions() {
       send.get("/transact",{})
       .then(res => {
         setLoading(false)
-        settransactions(res.data.data)
-        
+        settransactions(res.data.data)        
       })
       .catch(err => {
         console.log(err)
       })
 
       send.post("/user/get-user",{
-        email : user ? user.email : ""
+        email : cookie.user.user[0].email
       })
       .then(res => {
         setuserBalance(res.data.users[0].balance)
@@ -45,7 +45,7 @@ export default function Transactions() {
       })
   
       setUser(cookie.user.user[0])
-    },[transactions])
+    },[])
 
     return (
       <>
@@ -69,15 +69,17 @@ export default function Transactions() {
                         return(
                           <div className="tx d-flex">
                             <div className="d-flex">
-                            <i class="fa-solid fa-arrow-up-right-dots"></i>
                               <div>
-                                <p className="fw-semibold text-dark tx_ref  text-capitalize mb-1">{data.sender.firstname} {data.sender.lastname}</p>
-                                <p className="tx_ref mb-0">{data.sender.email}</p>
+                                <p className="mb-1"><i class="fa-solid fa-arrow-trend-up text-success"></i> Recieved from</p>
+                                <p className="fw-semibold text-dark tx_ref  text-capitalize mb-1">${data.sender.email.split("@")[0]}</p>
+                                <p className="tx_ref mb-1">{new Date(data.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                                <p className="mb-0 tx_ref" style={{fontSize:"12px"}}>Completed</p>
                               </div>
                             </div>
 
-                            <p className="mb-0 tx_amount">
-                              +${new Intl.NumberFormat('en-IN', {}).format(data.amount)}.00
+                            <p className="mb-2 fw-bold tx_amount">
+                              +${numeral(data.amount).format('0,0.00')}   <br /> <br />
+                              {/* <span className='text-success text-end'>${numeral(userBalance).format('0,0.00')}</span> */}
                             </p>
                           </div>
                         )
@@ -85,15 +87,17 @@ export default function Transactions() {
                         return(
                           <div className="tx d-flex">
                           <div className="d-flex">
-                          <i class="fa-solid fa-arrow-up-right-dots"></i>
                             <div>
-                              <p className="fw-semibold text-dark tx_ref  text-capitalize mb-1">{data.recipient.firstname} {data.recipient.lastname}</p>
-                              <p className="tx_ref mb-0">{data.recipient.email}</p>
+                              <p className="mb-1"><i class="fa-solid fa-arrow-trend-down text-danger"></i> Transfer to</p>
+                              <p className="fw-semibold text-dark tx_ref  text-capitalize mb-1">${data.recipient.email.split("@")[0]}</p>
+                              <p className="tx_ref mb-1">{new Date(data.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                              <p className="mb-0 tx_ref" style={{fontSize:"12px"}}>Completed</p>
                             </div>
                           </div>
 
-                          <p className="mb-0 text-danger tx_amount">
-                            -${new Intl.NumberFormat('en-IN', {}).format(data.amount)}.00
+                          <p className="mb-2 text-danger fw-bold tx_amount">
+                            -${numeral(data.amount).format('0,0.00')} <br />     <br />                      
+                              {/* <span className='text-success text-end'>${numeral(userBalance).format('0,0.00')}</span> */}
                           </p>
                         </div>
                         )

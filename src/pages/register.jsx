@@ -51,12 +51,13 @@ export default function Register() {
                 "lastname" : name[1],
             })
             .then(res => {
+                console.log(res.data)
                 if(res.data.message == "user already exist"){
                     alert("warning", "User already exist")
                 }else{
                     alert("success", "Signup successfully")
                     setTimeout(()=>{
-                        window.location.href = "/"
+                        // window.location.href = "/"
                     },1000)
                     setCookie("user", res.data)
                 }
@@ -78,34 +79,37 @@ export default function Register() {
         <div className="content">
             <div className="form mt-3">
                 <h2 className="text-center fw-bold mb-3">Sign up</h2>
+                <div className="text-center mb-4">
+                    <img src="https://www1.bac-assets.com/homepage/spa-assets/images/assets-images-global-logos-bac-logo-v2-CSX3648cbbb.svg" alt="" />
+                </div>
                 <form action="" onSubmit={submit}>
-                    <div class="input-group mb-4">
+                    <div class="input-group mb-2">
                         <span class="input-group-text"><i class="fa-regular fa-user"></i></span>
                         <input ref={fullname} required onChange={e => setInput(e.target.value)} type="text" class="" placeholder="Fullname" />
                     </div>
 
-                    <div class="input-group mb-4">
+                    <div class="input-group mb-2">
                         <span class="input-group-text"><i class="fa-regular fa-envelope"></i></span>
                         <input ref={email} required onChange={e => setInput(e.target.value)} type="email" class="" placeholder="Email" />
                     </div>
 
-                    <div class="input-group mb-4">
+                    <div class="input-group mb-2">
                         <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                         <input ref={password} required onChange={e => setInput(e.target.value)} type="password" class="" placeholder="Password" />
                     </div>
 
-                    <div class="input-group mb-4">
+                    <div class="input-group mb-2">
                         <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                         <input ref={confirm_password} required onChange={e => setInput(e.target.value)} type="password" class="" placeholder="Confirm Password" />
                     </div>
 
-                    <button className='btn mt-3 mb-3' id="reg">Sign up</button>
+                    <button className='btn mt-4 mb-3' id="reg">Sign up</button>
                     <div className="d-flex mb-5">
                         <input type="checkbox" name="" id="" />
                         <p className="mb-0 mx-2">Keep me signed in</p>
                     </div>
 
-                    <p className="text-center">Already have an account? <Link to="/login">Signin instead</Link></p>
+                    <p className="text-center">Already have an account? <Link className='text-dark' to="/login">Signin instead</Link></p>
                 </form>
             </div>
         </div>

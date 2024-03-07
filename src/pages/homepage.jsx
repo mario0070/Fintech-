@@ -8,6 +8,7 @@ import { useCookies } from 'react-cookie'
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import Send from '../utils/send'
+import numeral from 'numeral'
 
 export default function Homepage() {
   const [cookie, setCookie] = useCookies("")
@@ -76,7 +77,7 @@ export default function Homepage() {
     });
 
     useEffect(()=>{
-      send.get("/transact",)
+      send.get("/transact",)      
       .then(res => {
         settransactions(res.data.data)
         setLoading(false)
@@ -86,7 +87,7 @@ export default function Homepage() {
       })
 
       send.post("/user/get-user",{
-        email : user.email
+        email : cookie.user.user.email
       })
       .then(res => {
         setuserBalance(res.data.users[0].balance)
@@ -203,7 +204,7 @@ export default function Homepage() {
                 <div className="bal">
                   <h5 className="user_fullname">{`Hi, ${user.lastname}.`}</h5>
                   <p className="mb-1 mt-3">Total Balance</p>
-                  <h4 className="fw-bold mb-0 bal_amount"><span className='kobo text-muted'>$</span>{new Intl.NumberFormat('en-IN', {}).format(userBalance)}.<span className='kobo'>00</span> </h4>
+                  <h4 className="fw-bold mb-0 bal_amount"><span className='kobo text-muted'>$</span>{numeral(userBalance).format("0,0")}.<span className='kobo'>00</span> </h4>
                 </div>
 
                 <div className="plus" onClick={() => {openSheet(); gettingActions("send")}}>
@@ -244,33 +245,35 @@ export default function Homepage() {
                     if(data.recipient.email == user.email){
                       return(
                         <div className="tx d-flex">
-                          <div className="d-flex">
-                          <i class="fa-solid fa-arrow-up-right-dots"></i>
-                            <div>
-                              <p className="fw-semibold tx_ref text-dark text-capitalize mb-1">{data.sender.firstname} {data.sender.lastname}</p>
-                              <p className="tx_ref mb-0">{data.sender.email}</p>
-                            </div>
+                        <div className="d-flex">
+                          <div>
+                            <p className="mb-1"><i class="fa-solid fa-arrow-trend-up text-success"></i> Recieved from</p>
+                            <p className="fw-semibold text-dark tx_ref  text-capitalize mb-1">${data.sender.email.split("@")[0]}</p>
+                            <p className="tx_ref mb-1">{new Date(data.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                            <p className="mb-0 tx_ref" style={{fontSize:"12px"}}>Completed</p>
                           </div>
-
-                          <p className="mb-0 tx_amount">
-                            +${new Intl.NumberFormat('en-IN', {}).format(data.amount)}.00
-                          </p>
                         </div>
+
+                        <p className="mb-2 fw-bold tx_amount">
+                          +${numeral(data.amount).format('0,0.00')}   <br /> <br />
+                        </p>
+                      </div>
                       )
                     }
                     else if(data.sender.email == user.email){
                       return(
                         <div className="tx d-flex">
                           <div className="d-flex">
-                          <i class="fa-solid fa-arrow-up-right-dots"></i>
                             <div>
-                              <p className="fw-semibold text-dark tx_ref text-capitalize mb-1">{data.recipient.firstname} {data.recipient.lastname}</p>
-                              <p className="tx_ref mb-0">{data.recipient.email}</p>
+                              <p className="mb-1"><i class="fa-solid fa-arrow-trend-down text-danger"></i> Transfer to</p>
+                              <p className="fw-semibold text-dark tx_ref  text-capitalize mb-1">${data.recipient.email.split("@")[0]}</p>
+                              <p className="tx_ref mb-1">{new Date(data.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                              <p className="mb-0 tx_ref" style={{fontSize:"12px"}}>Completed</p>
                             </div>
                           </div>
 
-                          <p className="mb-0 text-danger tx_amount">
-                            -${new Intl.NumberFormat('en-IN', {}).format(data.amount)}.00
+                          <p className="mb-2 text-danger fw-bold tx_amount">
+                            -${numeral(data.amount).format('0,0.00')} <br />     <br />                      
                           </p>
                         </div>
                       )
@@ -290,7 +293,7 @@ export default function Homepage() {
                 <div className="my_card">
                     <div className="">
                         <p className="mb-1">Balance</p>
-                        <h4>${new Intl.NumberFormat('en-IN', {}).format(userBalance)}.00</h4>
+                        <h4>${numeral(userBalance).format("0,0")}.00</h4>
                         <p className="mb-1">Card Number</p>
                         <h4 className="mb-4">****** 4059</h4>
                         <div className="exp d-flex">

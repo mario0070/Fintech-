@@ -38,6 +38,7 @@ export default function Login() {
             "password" : password.current.value,
         })
         .then(res => {
+            console.log(res.data)
             alert("success", "Signed in successfully")
             setTimeout(()=>{
                 window.location.href = "/"
@@ -80,7 +81,7 @@ export default function Login() {
                         <p className="mb-0 mx-2">Keep me signed in</p>
                     </div>
 
-                 {/* <p className="text-center">Don't have an account? <Link to="/register">Signup instead</Link></p> */}
+                 <p className="text-center">Don't have an account? <Link to="/register" className='text-dark'>Signup instead</Link></p>
                 </form>
             </div>
         </div>

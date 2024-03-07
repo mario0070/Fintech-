@@ -1,3 +1,4 @@
+import numeral from 'numeral'
 import React from 'react'
 import { useCookies } from 'react-cookie'
 import { Link } from 'react-router-dom'
@@ -58,7 +59,7 @@ export default function TopBAr({user, userBalance, openSheet, gettingActions}) {
         <div class="offcanvas-body">
             <div className="head">
                 <p className="mb-1 fs-3">Balance</p>
-                <h4 className="fw-bold">₦{new Intl.NumberFormat('en-IN', {}).format(userBalance)}.<span>00</span></h4>
+                <h4 className="fw-bold">₦{numeral(userBalance).format("0,0.00")}</h4>
                 <div className="actions d-flex">
                     <div className="btn" data-bs-dismiss="offcanvas" onClick={() => {openSheet(), gettingActions("deposit")}}>
                       <i class="fa-solid fa-arrow-down"></i>
