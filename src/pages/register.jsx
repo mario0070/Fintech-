@@ -51,13 +51,12 @@ export default function Register() {
                 "lastname" : name[1],
             })
             .then(res => {
-                console.log(res.data)
                 if(res.data.message == "user already exist"){
                     alert("warning", "User already exist")
                 }else{
                     alert("success", "Signup successfully")
                     setTimeout(()=>{
-                        // window.location.href = "/"
+                        window.location.href = "/"
                     },1000)
                     setCookie("user", res.data)
                 }

@@ -35,7 +35,7 @@ export default function Transactions() {
       })
 
       send.post("/user/get-user",{
-        email : cookie.user.user[0].email
+        email : cookie.user.user.email ?? cookie.user.user[0].email
       })
       .then(res => {
         setuserBalance(res.data.users[0].balance)
@@ -44,7 +44,7 @@ export default function Transactions() {
         console.log(err)
       })
   
-      setUser(cookie.user.user[0])
+      setUser(cookie.user.user[0] ?? cookie.user.user)
     },[])
 
     return (

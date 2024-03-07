@@ -38,7 +38,6 @@ export default function Login() {
             "password" : password.current.value,
         })
         .then(res => {
-            console.log(res.data)
             alert("success", "Signed in successfully")
             setTimeout(()=>{
                 window.location.href = "/"

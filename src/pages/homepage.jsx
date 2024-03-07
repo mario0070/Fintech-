@@ -24,7 +24,7 @@ export default function Homepage() {
   const [actions,setActions] = useState("")
 
   useEffect(()=>{
-    setUser(cookie.user.user[0] || cookie.user.user)
+    setUser(cookie.user.user[0] ?? cookie.user.user)
   },[])
 
   const alert = (icon, msg) => {
@@ -87,7 +87,7 @@ export default function Homepage() {
       })
 
       send.post("/user/get-user",{
-        email : cookie.user.user.email
+        email : cookie.user.user.email ?? cookie.user.user[0].email
       })
       .then(res => {
         setuserBalance(res.data.users[0].balance)
